@@ -19,14 +19,15 @@ module.exports = class {
         }
 
         const guildDelete = JSON.stringify(new Discord.MessageEmbed()
-        .setTitle("`➖` Serveur quitté !")
-        .setDescription("<:cancel:739529403179991073> Malheureusement quelqu'un m'a expulsée sur **" + guild.name +"**.")
-        .addField("• <:invites:756168551731036402> **Nom:**", guild.name) 
-        .addField("• <:couronne:757208730239631370> **Propriétaire:** ", guild.owner.user.tag)
-        .addField("• <:idguildjoin:745383975547306084> **ID du serveur:** ", guild.id)
-        .addField("• <:memberguild:745388686337638460> **Membres:** ", guild.memberCount)
-        .setColor("d90e0b")).replace(/[\/\(\)\']/g, "\\$&");
-
+        .setTitle(`${emoji.leave} Left a Guild | ${guild.name}`)
+    .setDescription(`${emoji.members} **${guild.name}** | (\`${guild.id}\`)`)
+    .setThumbnail(guild.iconURL({ dynamic: true }) || null)
+    .addField("<:emoji_44:885169331976163328>**__Server Owner__**", `> ${guild.owner}`)
+    .addField("<:emoji_44:885169331976163328>**__Member Total__**", `> ${guild.memberCount}`)
+    .addField("<:emoji_44:885169331976163328>**__Member Human__**", `> ${guild.members.cache.reduce((acc, member) => acc + !member.user.bot, 0)}`)
+    .addField("<:emoji_44:885169331976163328>**__Server Bot Is In__**", `> ${client.guilds.cache.size}`)
+    .setColor("3A871F")
+    .setTimestamp()
         let { removeLogs } = this.client.config;
         this.client.shard.broadcastEval(`
             let rLogs = this.channels.cache.get('${removeLogs}');
